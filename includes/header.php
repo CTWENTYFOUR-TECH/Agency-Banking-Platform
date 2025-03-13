@@ -188,7 +188,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../../pages/pages/widgets.html">
+          <a class="nav-link " href="../Settings/">
             <span class="sidenav-mini-icon"> P </span>
             <span class="sidenav-normal"> Settings </span>
           </a>
