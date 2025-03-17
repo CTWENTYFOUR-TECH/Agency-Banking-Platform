@@ -110,28 +110,17 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-4 col-6">
+                <div class="col-6">
                   <label class="form-label mt-4">I'm</label>
                   <select class="form-control" name="choices-gender" id="choices-gender">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
                 </div>
-                <div class="col-sm-8">
-                  <div class="row">
-                    <div class="col-sm-5 col-5">
-                      <label class="form-label mt-4">Birth Date</label>
-                      <select class="form-control" name="choices-month" id="choices-month"></select>
-                    </div>
-                    <div class="col-sm-4 col-3">
-                      <label class="form-label mt-4">&nbsp;</label>
-                      <select class="form-control" name="choices-day" id="choices-day"></select>
-                    </div>
-                    <div class="col-sm-3 col-4">
-                      <label class="form-label mt-4">&nbsp;</label>
-                      <select class="form-control" name="choices-year" id="choices-year"></select>
-                    </div>
-                  </div>
+                <div class="col-6">
+                    <label class="form-label mt-4">Birth Date</label>
+                    <!-- <select class="form-control" name="choices-month" id="choices-month"></select> -->
+                    <input id="date" name="date" class="form-control" type="date" placeholder="Choose-Month">
                 </div>
               </div>
               <div class="row">
@@ -142,7 +131,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <label class="form-label mt-4">Confirmation Email</label>
+                  <label class="form-label mt-4">State</label>
                   <div class="input-group">
                     <input id="confirmation" name="confirmation" class="form-control" type="email" placeholder="example@email.com">
                   </div>
@@ -150,9 +139,9 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <label class="form-label mt-4">Your location</label>
+                  <label class="form-label mt-4">BVN</label>
                   <div class="input-group">
-                    <input id="location" name="location" class="form-control" type="text" placeholder="Sydney, A">
+                    <input id="bvn" name="bvn" class="form-control" type="text" placeholder="Enter BVN">
                   </div>
                 </div>
                 <div class="col-6">
@@ -163,19 +152,36 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 align-self-center">
-                  <label class="form-label mt-4">Language</label>
-                  <select class="form-control" name="choices-language" id="choices-language">
-                    <option value="English">English</option>
-                    <option value="French">French</option>
-                    <option value="Spanish">Spanish</option>
-                  </select>
+                <div class="col-6">
+                  <label class="form-label mt-4">Residential Address</label>
+                  <div class="input-group">
+                    <input id="Residential-Address" name="Residential-Address" class="form-control" type="text" placeholder="Enter Residential Address">
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label mt-4">Skills</label>
-                  <input class="form-control" id="choices-skills" type="text" value="vuejs, angular, react" placeholder="Enter something" />
+                <div class="col-6">
+                  <label class="form-label mt-4">Business Address</label>
+                  <div class="input-group">
+                    <input id="Business-Address" name="Business-Address" class="form-control" type="text" placeholder="Enter Business Address">
+                  </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-6 align-self-center">
+                  <label class="form-label mt-4">Business Name</label>
+                  <div class="input-group">
+                    <input id="Business-Name" name="Business-Name" class="form-control" type="text" placeholder="Enter Business Name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label mt-4">Business Number/RC Number(optional)</label>
+                  <div class="input-group">
+                    <input id="Business-Number" name="Business-Number" class="form-control" type="text" placeholder="Enter Business Number">
+                  </div>
+                </div>
+              </div>
+            <div class="card-body pt-0">
+              <button class="btn bg-gradient-dark btn-sm float-end mt-6 mb-0">Update Profile</button>
+            </div>
             </div>
           </div>
           <!-- Card Change Password -->
