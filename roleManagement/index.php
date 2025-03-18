@@ -1,66 +1,6 @@
 <?php
   include('../includes/header.php');
-?>
-  
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
-            <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-              <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Role Management</span>
-          </a>
-          <div class="collapse " id="ecommerceExamples">
-            <ul class="nav ms-4">
-             
-              <li class="nav-item ">
-                <a class="nav-link " href="../roleManagement/userRoles.html">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal"> User Role </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#Report" class="nav-link " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
-            <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-              <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Report</span>
-          </a>
-          <div class="collapse " id="Report">
-            <ul class="nav ms-4">
-             
-              <li class="nav-item ">
-                <a class="nav-link " href="../roleManagement/tables.html">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal"> Aggregator list </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../../pages/applications/calendar.html">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal"> Agent List </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../../pages/pages/widgets.html">
-            <span class="sidenav-mini-icon"> P </span>
-            <span class="sidenav-normal"> Settings </span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <hr class="horizontal dark" />
-        </li>
-      </ul>
-    </div>
-    <div class="sidenav-footer mx-3 my-3">
-      <a href="https://www.creative-tim.com/learning-lab/bootstrap/overview/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Log out</a>
-    </div>
-  </aside>
+?>  
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
@@ -176,4 +116,4 @@
 <?php
   include('../includes/footer.php');
   echo $footer;
-?> 
+?>
