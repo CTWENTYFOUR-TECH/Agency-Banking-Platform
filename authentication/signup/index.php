@@ -60,14 +60,14 @@
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
-                      <input type="email" class="form-control">
+                      <input type="email" class="form-control" name="emailLoginId" id="emailLoginId" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" class="form-control">
+                      <input type="password" class="form-control" name="passwordLogin" id="passwordLogin" required>
                     </div>
                     <div class="form-check form-check-info text-start ps-0">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked required>
                       <label class="form-check-label" for="flexCheckDefault">
                         I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
                       </label>
