@@ -70,7 +70,7 @@
 
                 <div class="relative w-full overflow-hidden lg:order-1 h-96 lg:h-auto lg:w-5/12">
                     <div class="absolute inset-0">
-                        <img class="w-full h-auto scale-300" src="assets/img/coworkers-sitting-cafe-dressed-formally.jpg" alt="" />
+                        <img class="object-cover w-full h-full scale-150" src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/3/man-working-on-laptop.jpg" alt="" />
                     </div>
 
                     <!-- <div class="absolute bottom-0 left-0">
