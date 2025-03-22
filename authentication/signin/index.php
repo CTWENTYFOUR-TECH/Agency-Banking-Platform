@@ -1,5 +1,5 @@
 <?php
- include("../includes/header.php")
+ include("./../includes/header.php")
 ?>
 
 <body class="">
@@ -55,5 +55,5 @@
   </main>
 
 <?php
- include("../includes/fo.php")
+ include("./../includes/footer.php")
 ?>
