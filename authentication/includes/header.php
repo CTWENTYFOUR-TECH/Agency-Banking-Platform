@@ -20,4 +20,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <!-- Toastr CSS -->
+  <link href="../assets/toastr/css/toastr.min.css" rel="stylesheet" />
 </head>

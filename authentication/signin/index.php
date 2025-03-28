@@ -26,17 +26,17 @@
                   <p class="mb-0">Enter your email and password to Sign In</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Email</label>
-                      <input type="email" class="form-control">
+                  <form role="form" method="POST" novalidate autocomplete="off" id="loginForm">
+                    <div class="input-group mb-3">
+                      <!-- <label class="form-label" for="emailAddress">Email</label> -->
+                      <input type="email" class="form-control" name="emailAddress" id="emailAddress" placeholder="Enter Email Address" required>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Password</label>
-                      <input type="password" class="form-control">
+                    <div class="input-group mb-3">
+                      <!-- <label class="form-label" for="password">Password</label> -->
+                      <input type="password" class="form-control" id="password" name="password" required placeholder="Enter Password">
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Sign In</button>
+                      <button type="submit" id="submitButton" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Sign In</button>
                     </div>
                   </form>
                 </div>
@@ -57,3 +57,44 @@
 <?php
  include("./../includes/footer.php")
 ?>
+
+<script>
+        $(document).ready(function () {
+            $("#loginForm").submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                let submitButton = $("#submitButton"); 
+                let originalText = submitButton.text(); // Store the original text
+
+                submitButton.prop("disabled", true).text("Please wait...Logging you in"); // Change text & disable button
+
+                let formData = {
+                    emailAddress: $("#emailAddress").val(),
+                    password: $("#password").val()
+                };
+
+                $.ajax({
+                    url: "../../Config/_login.php", // PHP file to handle login
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status === "success") {
+                            toastr.success("Login successful! Redirecting...", "Success");
+                            setTimeout(() => {
+                                window.location.href = response.redirect;
+                            }, 2000);
+                        } else {
+                            toastr.error(response.message, "Login Failed");
+                        }
+                    },
+                    error: function () {
+                        toastr.error("Something went wrong. Please try again.", "Error");
+                    },
+                    complete: function () {
+                        submitButton.prop("disabled", false).text(originalText); // Revert text & enable button
+                    }
+                });
+            });
+        });
+    </script>

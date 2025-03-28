@@ -1,0 +1,10 @@
+{
+    "name": "emman/agency-banking-platform",
+    "description": "agency banking system",
+    "autoload": {
+        "psr-4": {
+            "Emman\\AgencyBankingPlatform\\": "src/"
+        }
+    },
+    "require": {}
+}

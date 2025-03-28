@@ -1,17 +1,15 @@
 <?php
+  $title = "Dashboard | Agent Management System";
+  $nav_header = "Dashboard";
   include('../includes/header.php');
+
+  // Check if the user account status has been updated
+  if($userSessionData['accountStatus'] == 0 ){
+    echo "<script>
+          window.location.href='../Settings'
+        </script>";  
+    }
 ?>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <h3 class="font-weight-bolder mb-0 text-white">Dashboard</h3>
-        </nav>
-        
-      </div>
-    </nav>
-    <!-- End Navbar -->
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-lg-12">

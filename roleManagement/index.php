@@ -1,78 +1,15 @@
 <?php
+ $title = "Role Management | Agent Management System";
+ $nav_header = "Roles Assignment";
   include('../includes/header.php');
+
+  // Check if the user account status has been updated
+  if($userSessionData['accountStatus'] == 0 ){
+    echo "<script>
+          window.location.href='../Settings'
+        </script>";  
+    }
 ?>
-  
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
-            <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-              <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Role Management</span>
-          </a>
-          <div class="collapse " id="ecommerceExamples">
-            <ul class="nav ms-4">
-             
-              <li class="nav-item ">
-                <a class="nav-link " href="../roleManagement/userRoles.html">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal"> User Role </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#Report" class="nav-link " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
-            <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-              <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Report</span>
-          </a>
-          <div class="collapse " id="Report">
-            <ul class="nav ms-4">
-             
-              <li class="nav-item ">
-                <a class="nav-link " href="../roleManagement/tables.html">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal"> Aggregator list </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../../pages/applications/calendar.html">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal"> Agent List </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../../pages/pages/widgets.html">
-            <span class="sidenav-mini-icon"> P </span>
-            <span class="sidenav-normal"> Settings </span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <hr class="horizontal dark" />
-        </li>
-      </ul>
-    </div>
-    <div class="sidenav-footer mx-3 my-3">
-      <a href="https://www.creative-tim.com/learning-lab/bootstrap/overview/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Log out</a>
-    </div>
-  </aside>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          
-          <h3 class="font-weight-bolder mb-0 text-white">User Roles</h3>
-        </nav>
-        </div>
-      </div>
-    </nav>
-    <!-- End Navbar -->
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-lg-12 mb-4 mb-lg-0">
@@ -85,89 +22,114 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Select User<span class="text-danger">*</span></label>
-                                    <select class="form-select" aria-label="Default select example" required>
-                                        <option selected>Select User</option>
-                                        <option value="1">Admin</option>
-                                        <option value="2">Aggregator</option>
-                                        <option value="3">Agent</option>
-                                    </select>
+                                    <label>Role Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Enter the role name" name="roleName" />
                                 </div>
-                          </div>
-                          <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>User Management<span class="text-danger">*</span></label>
-                                    <select class="form-select" aria-label="Default select example" required>
-                                        <option selected>Select username</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                          </div>
-                      </div>
+                          	</div>
+                      	</div>
                        
-                       <div class="container  mt-4 mb-4">
+                       <div class="container mt-4 mb-4">
                         <div>
-                            <h4>user Management</h4>
+                            <h5>User Management</h5>
                            </div>
                         <div class="row">
-                          <div class="col form-check">
-                            <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" name="createAdmin" type="checkbox" value="1" id="createAdmin">
                             Create Admin
                           </div>
-                          <div class="col form-check">
-                            <input class="form-check-input" type="checkbox" value="2" id="defaultCheck1">
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="createAggregator" value="1" id="createAggregator">
                             Create Aggregator
                           </div>
-                          <div class="col form-check">
-                            <input class="form-check-input" type="checkbox" value="3" id="defaultCheck1">
-                            Create Agent
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="updateUserRole" value="1" id="updateUserRole">
+                            Update User Role
                           </div>
-                          <div class="col form-check">
-                            <input class="form-check-input" type="checkbox" value="3" id="defaultCheck1">
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="viewUser" value="1" id="viewUser">
+                            View User
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="deleteUser" value="1" id="deleteUser">
+                            Delete User
+                          </div>
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="deactivateUser" value="1" id="deactivateUser">
+                            Deactivate User
+                          </div>
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="activateUser" value="1" id="activateUser">
+                            Activate/Reactivate User
+                          </div>
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name ="upgradeAggregator" value="1" id="upgradeAggregator">
                             Upgrade to Aggregator
                           </div>
                         </div>
-                      </div>
-                       
-                       <div class="container  mt-4 mb-4">
-                        <div class="">
-                            <h5>Account Opening</h5>
+                        <div class="row">
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name ="unlockUser" value="1" id="unlockUser">
+                            Unlock User
+                          </div>
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name ="editUser" value="1" id="editUser">
+                            Edit User
+                          </div>
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name ="createRoles" value="1" id="createRoles">
+                              Create Role
+                          </div>
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name ="viewRoles" value="1" id="viewRoles">
+                              View Roles
+                          </div>
+                        </div>
+                      </div>     
+                      <div class="container mt-4 mb-4">
+                          <div class="">
+                            <h5>Services</h5>
                            </div>
                         <div class="row">
-                          <div class="col form-check">
-                            <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
-                            Saving Account (bvn)
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="accountOpening" value="1" id="accountOpening">
+                            Account Opening
                           </div>
-                          <div class="col form-check">
-                            <input class="form-check-input" type="checkbox" value="2" id="defaultCheck1">
-                            Savings Account(nin)
-                          </div>
-                          <div class="col form-check">
-                            <input class="form-check-input" type="checkbox" value="3" id="defaultCheck1">
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="cardIssuance" value="1" id="cardIssuance">
                             Card Issuance
                           </div>
                         </div>
                       </div>
                       <div class="container mt-4 mb-4">
-                        <div >
-                            <h5>Identity Check</h5>
-                           </div>
-                           <div class="row">
-                            <div class="col form-check">
-                              <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
-                                BVN Check
+                        <div>
+                          <h5>Report</h5>
+                         </div>
+                         <div class="row">
+                            <div class="col-md-3 form-check">
+                              <input class="form-check-input" type="checkbox" name="accountOpeningReport" value="1" id="accountOpeningReport">
+                              Account Opening Report
                             </div>
-                            <div class="col form-check">
-                              <input class="form-check-input" type="checkbox" value="2" id="defaultCheck1">
-                              NIN Check
+                            <div class="col-md-3 form-check">
+                              <input class="form-check-input" type="checkbox" name="cardIssuanceReport" value="1" id="cardIssuanceReport">
+                              Card Issuance Report
                             </div>
+                            <div class="col-md-3 form-check">
+                              <input class="form-check-input" type="checkbox" name="agentOnboardedReport" value="1" id="agentOnboardedReport">
+                              Agent Onboarded Report
+                            </div>
+                            <div class="col-md-3 form-check">
+                              <input class="form-check-input" type="checkbox" name="aggregatorReport" value="1" id="aggregatorReport">
+                              Aggregator Report
+                            </div>
+                      	</div> 
                       </div>
-                      
-                        
-                      </div class="mt-4">
-                        <button type="button" class="btn btn-primary"> Submit </button>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <button type="button" class="btn btn-primary btn-sm"> Submit </button>
+                        </div>
+                      </div>
                       </form>
                   </div>
                 </div>

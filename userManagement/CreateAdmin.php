@@ -21,37 +21,61 @@
                     
                   </div>
                   <div class="card-body p-3">
-                    <form>
+                    <form method="POST" id="adminCreation" novalidate autocomplete="off">
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <div class="form-group">
-                                <label>First Name:<span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="john" required>
+                                <label for="firstName" class="form-label">First Name:<span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <div class="form-group">
-                                <label>Middle Name:<span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="doe" required>
+                                <label for="middleName" class="form-label">Middle Name:<span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="middleName" placeholder="Enter Middle Name" required>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-md-6">
+                          <div class="col-md-4">
                               <div class="form-group">
-                                  <label>Last Name:<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1" required>
+                                  <label for="lastName" class="form-label">Last Name:<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required placeholder="Enter Last Name">
                               </div>
                             </div>
-                            <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                  <label for="gender">Gender:<span class="text-danger">*</span></label>
+                                  <select class="form-control" id="gender" name="gender" required>
+                                    <option value="">...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
                               <div class="form-group">
                                   <label>Email Address:<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1"  placeholder="jon...@gmail.com"  required>
+                                <input type="email" class="form-control" id="exampleFormControlInput1"  placeholder="jon...@gmail.com"  required>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                  <label for="phoneNumber">Phone Number:<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number"  required>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                  <label for="roles">Choose Group Role:<span class="text-danger">*</span></label>
+                                  <select class="form-control" id="roles" name="roles" required>
+                                    <option value="">Select Roles</option>
+                                  </select>
                               </div>
                             </div>
                         </div>
                          
                         </div>
-                        <button type="button" class="btn btn-primary"> Submit </button>
+                        <button type="submit" class="btn btn-primary" class="create_admin"> Submit </button>
                       </form>
                   </div>
                 </div>

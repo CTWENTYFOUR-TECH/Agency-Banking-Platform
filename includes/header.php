@@ -1,3 +1,40 @@
+<?php
+// Start the session (if not already started)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Include the permissions.php file
+require_once("../Config/_permission.php");
+
+// Validate the session and check permissions
+validateSession();
+
+// Get user session data
+$userSessionData = getUserSessionData();
+
+// Get CSS for hidden elements based on permissions
+$css = getHiddenElementsCSS();
+
+// Access GroupName
+$permissions = getUserPermissions();
+
+  @$group_name = $permissions['GroupName'];
+  @$group_id = $permissions['GroupID'];
+
+
+// $createUser = $permissions['createadmin_user'];
+
+$loginUserId = $userSessionData['emailAddress'];
+$apiKeyUserId = $userSessionData['secretKey'];
+
+// Set a default title (can be overridden by individual pages)
+$title = $title ?? "Agent Management System";
+
+// if($createUser == 0) {
+//   echo "<style> .createadmin_user {display: none} </style>";
+// }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +44,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Argon Dashboard 2 PRO by Creative Tim
+    <?= $title; ?>
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -19,6 +56,15 @@
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.5" rel="stylesheet" />
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <!-- Toastr CSS -->
+   <link href="../assets/toastr/css/toastr.min.css" rel="stylesheet" />
+
+   <!-- Datepicker CSS -->
+   <link href="../assets/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+  <!-- Argon CSS -->
+  <?php echo $css; ?>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -26,16 +72,16 @@
   <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href="https://demos.creative-tim.com/argon-dashboard-pro/pages/dashboards/default.html " target="_blank">
+      <a class="navbar-brand m-0" href="#" target="_blank">
         <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Argon Dashboard 2 PRO</span>
+        <span class="ms-1 font-weight-bold">Lukeport AMS</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="../dashboards/default.html" class="nav-link active" aria-controls="dashboardsExamples" aria-expanded="false">
+          <a href="../Dashboard" class="nav-link active" aria-controls="dashboardsExamples" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-shop text-primary text-sm opacity-10"></i>
             </div>
@@ -51,28 +97,34 @@
           </a>
           <div class="collapse " id="applicationsExamples">
             <ul class="nav ms-4">
-              <li class="nav-item ">
-                <a class="nav-link " href="../userManagement/CreateAdmin.php">
+              <li class="nav-item createadmin_user">
+                <a class="nav-link " href="../CreateAdmin/">
                   <span class="sidenav-mini-icon"> W </span>
                   <span class="sidenav-normal">Create Admin</span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../userManagement/CreateAggregator.php">
+              <li class="nav-item createaggregator_user">
+                <a class="nav-link " href="../CreateAggregator/">
                   <span class="sidenav-mini-icon"> K </span>
                   <span class="sidenav-normal"> Create Aggregators </span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../userManagement/CreateAgent.php">
+              <li class="nav-item createsubagent_user">
+                <a class="nav-link " href="../CreateAgent">
                   <span class="sidenav-mini-icon"> W </span>
                   <span class="sidenav-normal"> Create Sub Agent </span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../pages/applications/datatables.php">
+              <li class="nav-item upgradeaggregator_user">
+                <a class="nav-link " href="../UpgradeAggregator">
                   <span class="sidenav-mini-icon"> D </span>
                   <span class="sidenav-normal"> Upgrade To Aggregator </span>
+                </a>
+              </li>
+              <li class="nav-item unlock_user">
+                <a class="nav-link " href="../UnlockUser">
+                  <span class="sidenav-mini-icon"> D </span>
+                  <span class="sidenav-normal"> Unlock User </span>
                 </a>
               </li>
             </ul>
@@ -88,63 +140,39 @@
           <div class="collapse " id="pagesExamples">
             <ul class="nav ms-4">
 
-              <li class="nav-item ">
+              <li class="nav-item accountopening_user">
                 <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#AccountOpening">
                   <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal">Account Opening <b class="caret"></b></span>
+                  <span class="sidenav-normal"> Account Opening <b class="caret"></b></span>
                 </a>
                   <div class="collapse " id="AccountOpening">
                     <ul class="nav nav-sm flex-column">
-                      <li class="nav-item">
-                        <a class="nav-link " href="../OpenAccountBVN/index.php">
+                      <li class="nav-item ">
+                        <a class="nav-link " href="../OpenAccountBVN">
                           <span class="sidenav-mini-icon text-xs"> N </span>
-                          <span class="sidenav-normal">Savings Account (bvn) </span>
+                          <span class="sidenav-normal"> Savings Account (bvn) </span>
                         </a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link " href="../OpenAccountNIN/index.php">
+                      <li class="nav-item ">
+                        <a class="nav-link " href="../OpenAccountNIN">
                           <span class="sidenav-mini-icon text-xs"> E </span>
-                          <span class="sidenav-normal">Savings Account (VNIN) </span>
+                          <span class="sidenav-normal"> Savings Account (VNIN) </span>
                         </a>
                       </li>
-                     
                   </ul>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link " href="../CardIssuance/index.php">
+              <li class="nav-item cardissuance_user">
+                <a class="nav-link " href="../cardIssuance">
                   <span class="sidenav-mini-icon"> P </span>
                   <span class="sidenav-normal"> Card Issuance </span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#IdentityCheck">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal"> Identity Check <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="IdentityCheck">
-                    <ul class="nav nav-sm flex-column">
-                       <li class="nav-item">
-                        <a class="nav-link " href="../BVN_Check/index.html">
-                          <span class="sidenav-mini-icon text-xs"> N </span>
-                          <span class="sidenav-normal"> BVN Check </span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link " href="../NIN_Check/index.html">
-                          <span class="sidenav-mini-icon text-xs"> N </span>
-                          <span class="sidenav-normal"> NIN Check </span>
-                        </a>
-                      </li>
-                    </ul>
-                </div>
-              </li>
-              
             </ul>
           </div>
         </li>
   
-        <li class="nav-item">
+        <li class="nav-item createrole_user">
           <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
@@ -154,8 +182,8 @@
           <div class="collapse " id="ecommerceExamples">
             <ul class="nav ms-4">
              
-              <li class="nav-item ">
-                <a class="nav-link " href="../roleManagement/index.php">
+              <li class="nav-item createrole_user">
+                <a class="nav-link " href="../roleManagement">
                   <span class="sidenav-mini-icon"> R </span>
                   <span class="sidenav-normal"> User Role </span>
                 </a>
@@ -166,39 +194,87 @@
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#Report" class="nav-link " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-              <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
+              <i class="ni ni-chart-pie-35 text-info text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Report</span>
           </a>
           <div class="collapse " id="Report">
             <ul class="nav ms-4">
-              <li class="nav-item ">
-                <a class="nav-link " href="../roleManagement/tables.html">
+             
+              <li class="nav-item aggregatorreport_user">
+                <a class="nav-link " href="../AggregatorReport">
                   <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal"> Aggregator list </span>
+                  <span class="sidenav-normal"> Aggregator List </span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../../pages/applications/calendar.html">
+            </li>
+              <li class="nav-item agentonboardedreport_user">
+                <a class="nav-link " href="../AgentReport">
                   <span class="sidenav-mini-icon"> C </span>
                   <span class="sidenav-normal"> Agent List </span>
+                </a>
+              </li>
+              <li class="nav-item accountopeningreport_user">
+                <a class="nav-link " href="../AccountOpeningReport">
+                  <span class="sidenav-mini-icon"> R </span>
+                  <span class="sidenav-normal"> Account Opening Report </span>
+                </a>
+              </li>
+              <li class="nav-item cardissuancereport_user">
+                <a class="nav-link " href="../CardIssuanceReport">
+                  <span class="sidenav-mini-icon"> R </span>
+                  <span class="sidenav-normal"> Card Issuance Report </span>
+                </a>
+              </li>
+              <li class="nav-item view_user">
+                <a class="nav-link " href="../User">
+                  <span class="sidenav-mini-icon"> R </span>
+                  <span class="sidenav-normal"> Lukeport Users </span>
                 </a>
               </li>
             </ul>
           </div>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link " href="../Settings/">
-            <span class="sidenav-mini-icon"> P </span>
-            <span class="sidenav-normal"> Settings </span>
+          <a data-bs-toggle="collapse" href="#settings" class="nav-link " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
+            <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+              <i class="ni ni-settings text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Settings</span>
           </a>
-        </li>
+          <div class="collapse " id="settings">
+            <ul class="nav ms-4">
+             
+              <li class="nav-item ">
+                <a class="nav-link " href="../Settings">
+                  <span class="sidenav-mini-icon"> R </span>
+                  <span class="sidenav-normal"> Profile </span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
         <li class="nav-item">
           <hr class="horizontal dark" />
         </li>
       </ul>
     </div>
     <div class="sidenav-footer mx-3 my-3">
-      <a href="https://www.creative-tim.com/learning-lab/bootstrap/overview/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Log out</a>
+        <span class="sidenav-normal">  <i class="ni ni-like-2 text-warning"></i> Welcome! <?= $userSessionData['lastName']; ?></span>
+    <a href="../Config/_logout.php" class="btn btn-dark btn-sm w-100 mb-3"><i class="ni ni-button-power text-warning text-sm opacity-10"></i> Log out</a>
     </div>
   </aside>
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <h3 class="font-weight-bolder mb-0 text-white"><?= $nav_header ?></h3>
+        </nav>
+        
+      </div>
+    </nav>
+    <!-- End Navbar -->
