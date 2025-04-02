@@ -140,11 +140,12 @@
               </div>
               <div class="row">
               <div class="col-6" id="activeStatusIs1">
-                    <label class="form-label mt-4">Birth Date<span class="text-danger">*</span></label>
-                    <div class="input-group date" id="dateofbirthPicker">
+                  <label class="form-label mt-4">Birth Date<span class="text-danger">*</span></label>
+                  <div class="input-group date" id="dateofbirthPicker">
                       <input id="dateofbirth" name="dateofbirth" class="form-control" type="text" placeholder="Enter date of birth" required width ="100%">
                       <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                </div>
+                  </div>
+              </div>
                 <div class="col-6" id="activeStatusIs1">
                   <label class="form-label mt-4">State<span class="text-danger">*</span></label>
                   <div class="input-group">
@@ -199,7 +200,7 @@
                 <div class="col-6" id="activeStatusIs1">
                   <label class="form-label mt-4">Phone Number<span class="text-danger">*</span></label>
                   <div class="input-group">
-                    <input id="phoneNumber" name="phoneNumber" class="form-control" type="number" placeholder="07012345678" required oninput="limitInputLength(this)">
+                    <input id="phoneNumber" name="phoneNumber" class="form-control" type="number" value="<?= $userSessionData['phoneNumber'] ?>"  required readonly>
                   </div>
                 </div>
               </div>
@@ -254,41 +255,42 @@
             <div class="card-header">
               <h5>Change Password</h5>
             </div>
-          <form method ="POST" id="updatePasswordForm" autocomplete="off" role="form">
-            <div class="card-body pt-0">
-              <label class="form-label">Current password</label>
-              <div class="form-group">
-                <input class="form-control" type="password" placeholder="Current password" name="current_password" id="current_password" required>
-              </div>
-              <label class="form-label">New password</label>
-              <div class="form-group">
-                <input class="form-control" type="password" placeholder="New password" id="new_password" name="new_password" required>
-              </div>
-              <label class="form-label">Confirm new password</label>
-              <div class="form-group">
-                <input class="form-control" type="password" placeholder="Confirm password" id="confirm_password" name="confirm_password" required>
-              </div>
-              <h5 class="mt-5">Password requirements</h5>
-              <p class="text-muted mb-2">
-                Please follow this guide for a strong password:
-              </p>
-              <ul class="text-muted ps-4 mb-0 float-start">
-                <li>
-                  <span class="text-sm">One special characters</span>
-                </li>
-                <li>
-                  <span class="text-sm">Min 6 characters</span>
-                </li>
-                <li>
-                  <span class="text-sm">One number (2 are recommended)</span>
-                </li>
-                <li>
-                  <span class="text-sm">Change it often</span>
-                </li>
-              </ul>
-              <button class="btn bg-gradient-dark btn-sm float-end mt-6 mb-0" id="updatePasswordButton">Update password</button>
+                <form method ="POST" id="updatePasswordForm" autocomplete="off" role="form">
+                  <div class="card-body pt-0">
+                    <label class="form-label">Current password</label>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="Current password" name="current_password" id="current_password" required>
+                    </div>
+                    <label class="form-label">New password</label>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="New password" id="new_password" name="new_password" required>
+                    </div>
+                    <label class="form-label">Confirm new password</label>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="Confirm password" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    <h5 class="mt-5">Password requirements</h5>
+                    <p class="text-muted mb-2">
+                      Please follow this guide for a strong password:
+                    </p>
+                    <ul class="text-muted ps-4 mb-0 float-start">
+                      <li>
+                        <span class="text-sm">One special characters</span>
+                      </li>
+                      <li>
+                        <span class="text-sm">Min 6 characters</span>
+                      </li>
+                      <li>
+                        <span class="text-sm">One number (2 are recommended)</span>
+                      </li>
+                      <li>
+                        <span class="text-sm">Change it often</span>
+                      </li>
+                    </ul>
+                    <button class="btn bg-gradient-dark btn-sm float-end mt-6 mb-0" id="updatePasswordButton">Update password</button>
+                  </div>
+              </form>
             </div>
-          </div>
           <!-- Card Change Password -->
           
           <!-- Card Accounts -->
@@ -586,6 +588,51 @@ $(document).ready(function() {
         }
     });
 });
+
+// UPDATE PASSWORD
+
+$("#updatePasswordForm").submit(function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        let submitButton = $("#updatePasswordButton");
+        let originalText = submitButton.text(); // Store original text
+
+        // submitButton.prop("disabled", true).text("Please wait...while user is created"); // Disable button & show progress
+        submitButton.prop("disabled", true).html(`
+                    <span class="button-content">
+                        <i class="fa fa-spinner fa-spin fa-fw"></i>
+                        <span> Updating password...</span>
+                    </span>
+                `);
+        let formData = {
+                    current_password: $("#current_password").val(),
+                    new_password: $("#new_password").val(),
+                    confirm_password: $("#confirm_password").val()
+                };
+        $.ajax({
+            url: "../Config/_update_password.php", // PHP file to handle role creation
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            success: function (response) {
+                if (response.status === "success") {
+                    toastr.success("Update Password Successfully!", "Success");
+                    setTimeout(() => {
+                        window.location.href = response.redirectUrl;
+                    }, 2000);
+                } else {
+                    toastr.error(response.message, "Unable to create user, please try again");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", xhr.responseText);
+                toastr.error("Something went wrong. Please check the console.", "Error");
+            },
+            complete: function () {
+                submitButton.prop("disabled", false).text(originalText); // Re-enable button
+            }
+        });
+    });
 
 });
       </script>

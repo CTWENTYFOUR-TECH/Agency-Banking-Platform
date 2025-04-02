@@ -5,6 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $middleName = htmlspecialchars(trim($_POST['middleName']));
     $gender = htmlspecialchars(trim($_POST['gender']));
     $emailLoginId = htmlspecialchars(trim($_POST['emailLoginId']));
+    $phoneNumber = htmlspecialchars(trim($_POST['phoneNumber']));
     $passwordLogin = htmlspecialchars(trim($_POST['passwordLogin']));
     $confirmPassword = htmlspecialchars(trim($_POST['confirmPassword']));
 
@@ -30,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             "ConfirmPassword"=>$confirmPassword,
             "Gender"=>$gender,
             "EmailAddress"=>$emailLoginId,
+            "PhoneNumber"=>$phoneNumber,
             "Roles"=>"AGENT"
         )),
         CURLOPT_HTTPHEADER => array(

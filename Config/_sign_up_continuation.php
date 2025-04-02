@@ -7,7 +7,7 @@ $apiKey = $userSessionData['secretKey'];
 $agentCode = $userSessionData['agentCode'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $phoneNumber = htmlspecialchars(trim($_POST['phoneNumber']));
+    // $phoneNumber = htmlspecialchars(trim($_POST['phoneNumber']));
     $bvn = htmlspecialchars(trim($_POST['bvn']));
     $dateofBirth = htmlspecialchars(trim($_POST['dateofbirth']));
     $residentialAddress = htmlspecialchars(trim($_POST['residentialAddress']));
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => json_encode(array(
             "LoginID"=> $loginID,
-            "PhoneNumber"=> $phoneNumber,
+            // "PhoneNumber"=> $phoneNumber,
             "BVN"=> $bvn,
             "ResidentialAddress"=> $residentialAddress,
             "BusinessAddress"=> $businessAddress,
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Redirect based on FirstTimeLogin
-    $redirectUrl = './_logout.php'; //
+    $redirectUrl = './../Config/_logout.php'; //
 
     echo json_encode(['status' => 'success', 'redirect' => $redirectUrl]);
 }

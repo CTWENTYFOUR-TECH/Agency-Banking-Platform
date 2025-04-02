@@ -1,7 +1,13 @@
 <?php
- $title = "Role Management | Agent Management System";
- $nav_header = "Roles Assignment";
-  include('../includes/header.php');
+$title = "Role Management | Agent Management System";
+$nav_header = "Roles Assignment";
+include('../includes/header.php');
+
+if (!checkPermissions(PERMISSION_CREATE_ROLE)) {
+  header('Location: ../Forbidden/?action=403');
+      exit;
+  }
+  ob_start();
 
   // Check if the user account status has been updated
   if($userSessionData['accountStatus'] == 0 ){
@@ -18,12 +24,12 @@
                     
                   </div>
                   <div class="card-body p-3">
-                    <form>
+                    <form method="POST" autocomplete="off" novalidate id="createRoleForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Role Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Enter the role name" name="roleName" />
+                                    <input type="text" class="form-control" placeholder="Enter the role name" name="roleName" id="roleName"/>
                                 </div>
                           	</div>
                       	</div>
@@ -34,12 +40,16 @@
                            </div>
                         <div class="row">
                           <div class="col-md-3 form-check">
-                            <input class="form-check-input" name="createAdmin" type="checkbox" value="1" id="createAdmin">
+                            <input class="form-check-input" type="checkbox" name="createAdmin" value="1" id="createAdmin">
                             Create Admin
                           </div>
-                          <div class="col-md-3 form-check">
+                          <!-- <div class="col-md-3 form-check">
                             <input class="form-check-input" type="checkbox" name="createAggregator" value="1" id="createAggregator">
                             Create Aggregator
+                          </div> -->
+                          <div class="col-md-3 form-check">
+                            <input class="form-check-input" type="checkbox" name="createSubAgent" value="1" id="createSubAgent">
+                            Create Subagent
                           </div>
                           <div class="col-md-3 form-check">
                             <input class="form-check-input" type="checkbox" name="updateUserRole" value="1" id="updateUserRole">
@@ -127,7 +137,7 @@
                       </div>
                       <div class="row">
                         <div class="col-md-4">
-                          <button type="button" class="btn btn-primary btn-sm"> Submit </button>
+                          <button type="submit" class="btn btn-primary btn-sm" id="createRoleButton"> Submit </button>
                         </div>
                       </div>
                       </form>
@@ -139,3 +149,106 @@
   include('../includes/footer.php');
   echo $footer;
 ?> 
+<script>
+// $(document).ready(function () {
+//     $("#createRoleForm").submit(function (event) {
+//         event.preventDefault(); // Prevent default form submission
+
+//         let submitButton = $("#createRoleButton");
+//         let originalText = submitButton.text(); // Store original text
+
+//         // submitButton.prop("disabled", true).text("Please wait..."); // Disable button & show progress
+//         submitButton.prop("disabled", true).html(`
+//                     <span class="button-content">
+//                         <i class="fa fa-spinner fa-spin fa-fw"></i>
+//                         <span> Please wait...</span>
+//                     </span>
+//                 `);
+
+//         // Ensure unchecked checkboxes submit as "0"
+//         $("input[type=checkbox]").each(function () {
+//             if (!$(this).is(":checked")) {
+//                 $(this).prop("checked", true).val("0");
+//             }
+//         });
+
+//         let formData = $("#createRoleForm").serialize(); // Serialize form data
+
+//         $.ajax({
+//             url: "../Config/_create_roles.php", // PHP file to handle role creation
+//             type: "POST",
+//             data: formData,
+//             dataType: "json",
+//             success: function (response) {
+//                 if (response.status === "success") {
+//                     console.log(response);
+//                     toastr.success("Group Roles Created Successfully!", "Success");
+//                     setTimeout(() => {
+//                         window.location.href = response.redirectUrl;
+//                     }, 2000);
+//                 } else {
+//                     toastr.error(response.message, "Unable to create group role, please try again");
+//                 }
+//             },
+//             error: function (xhr, status, error) {
+//                 console.error("AJAX Error:", xhr.responseText);
+//                 toastr.error("Something went wrong. Please check the console.", "Error");
+//             },
+//             complete: function () {
+//                 submitButton.prop("disabled", false).text(originalText); // Re-enable button
+//             }
+//         });
+//     });
+// });
+$(document).ready(function () {
+    $("#createRoleForm").submit(function (event) {
+        event.preventDefault();
+
+        let submitButton = $("#createRoleButton");
+        let originalText = submitButton.text();
+
+        submitButton.prop("disabled", true).html(`
+            <span class="button-content">
+                <i class="fa fa-spinner fa-spin fa-fw"></i>
+                <span> Please wait...</span>
+            </span>
+        `);
+
+        // Collect all form data including unchecked checkboxes
+        let formData = {};
+        
+        // Add all input fields
+        $("#createRoleForm").find("input, select, textarea").each(function() {
+            if (this.type === "checkbox") {
+                formData[this.name] = $(this).is(":checked") ? "1" : "0";
+            } else if (this.name) {
+                formData[this.name] = $(this).val();
+            }
+        });
+
+        $.ajax({
+            url: "../Config/_create_roles.php",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            success: function (response) {
+                if (response.status === "success") {
+                    toastr.success("Group Roles Created Successfully!", "Success");
+                    setTimeout(() => {
+                        window.location.href = response.redirectUrl;
+                    }, 2000);
+                } else {
+                    toastr.error(response.message, "Unable to create group role, please try again");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", xhr.responseText);
+                toastr.error("Something went wrong. Please check the console.", "Error");
+            },
+            complete: function () {
+                submitButton.prop("disabled", false).text(originalText);
+            }
+        });
+    });
+});
+</script>

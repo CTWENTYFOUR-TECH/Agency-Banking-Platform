@@ -3,16 +3,19 @@ include('_permission.php');
 
 $userSessionData = getUserSessionData();
 
+$loginID = $userSessionData['emailAddress'];
+
+// Validate session key
+$apiKey = $userSessionData['secretKey']; 
+
+$base_url = 'https://lukeportservice.cpay.ng/lukeportservice';
+
 header("Content-Type: application/json"); // Ensure JSON response
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
     exit;
 }
-
-// Validate session key
-
-$apiKey = $userSessionData['secretKey']; 
 
 if (!isset($apiKey) || empty($apiKey)) {
     echo json_encode(['status' => 'error', 'message' => 'Unauthorized access. API key missing.']);
@@ -23,24 +26,26 @@ if (!isset($apiKey) || empty($apiKey)) {
     // Validate input fields
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $loginID = htmlspecialchars(trim($_POST['loginID']));
-    $groupName = htmlspecialchars(trim($_POST['groupRole']));
-    $ReportCreate = htmlspecialchars(trim($_POST['createReport']));
-    $ReportUpdate = htmlspecialchars(trim($_POST['updateReport']));
-    $ReportDelete = htmlspecialchars(trim($_POST['deleteReport']));
-    $UserRoleUpdate = htmlspecialchars(trim($_POST['updateUserRole']));
-    $UserCreate = htmlspecialchars(trim($_POST['createUser']));
-    $ViewUser = htmlspecialchars(trim($_POST['viewUser']));
-    $UserDelete = htmlspecialchars(trim($_POST['deleteUser']));
-    $UserEdit = htmlspecialchars(trim($_POST['editUser']));
-    $RoleCreate = htmlspecialchars(trim($_POST['createRole']));
-    $ReportAudit = htmlspecialchars(trim($_POST['auditReport']));
-    $GroupView = htmlspecialchars(trim($_POST['viewGroup']));
-    $UserUnlock = htmlspecialchars(trim($_POST['unlockUser']));
-    $ReportSend = htmlspecialchars(trim($_POST['sendReport']));
-    $BlacklistBvn = htmlspecialchars(trim($_POST['bvnBlacklisting']));
-    $UploadBVN  = htmlspecialchars(trim($_POST['uploadBVN']));
-    $AppRating  = htmlspecialchars(trim($_POST['surveyRating']));
+    // $loginID = htmlspecialchars(trim($_POST['loginID']));
+    $groupName = htmlspecialchars(trim($_POST['roleName']));
+    $createAdmin = htmlspecialchars(trim($_POST['createAdmin']));
+    $createSubAgent = htmlspecialchars(trim($_POST['createSubAgent']));
+    $createAggregator = htmlspecialchars(trim($_POST['createAggregator']));
+    $updateUserRole = htmlspecialchars(trim($_POST['updateUserRole']));
+    $viewUser = htmlspecialchars(trim($_POST['viewUser']));
+    $deleteUser = htmlspecialchars(trim($_POST['deleteUser']));
+    $deactivateUser = htmlspecialchars(trim($_POST['deactivateUser']));
+    $activateUser = htmlspecialchars(trim($_POST['activateUser']));
+    $upgradeAggregator = htmlspecialchars(trim($_POST['upgradeAggregator']));
+    $unlockUser = htmlspecialchars(trim($_POST['unlockUser']));
+    $editUser = htmlspecialchars(trim($_POST['editUser']));
+    $createRoles = htmlspecialchars(trim($_POST['createRoles']));
+    $viewRoles = htmlspecialchars(trim($_POST['viewRoles']));
+    $cardIssuance = htmlspecialchars(trim($_POST['cardIssuance']));
+    $accountOpeningReport  = htmlspecialchars(trim($_POST['accountOpeningReport']));
+    $cardIssuanceReport  = htmlspecialchars(trim($_POST['cardIssuanceReport']));
+    $agentOnboardedReport  = htmlspecialchars(trim($_POST['agentOnboardedReport']));
+    $aggregatorReport  = htmlspecialchars(trim($_POST['aggregatorReport']));
    
         // Sanitize inputs
     $groupName = htmlspecialchars($groupName, ENT_QUOTES, 'UTF-8');
@@ -50,7 +55,7 @@ if (!isset($apiKey) || empty($apiKey)) {
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-        CURLOPT_URL => 'https://compliancetest.cpay.ng/compliance/api/create_group',
+        CURLOPT_URL => $base_url.'/api/create_role',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -61,22 +66,24 @@ if (!isset($apiKey) || empty($apiKey)) {
         CURLOPT_POSTFIELDS => json_encode([
                 "GroupID" => $groupID,
                 "GroupName"=> $groupName,
-                "CreateReport"=> $ReportCreate,
-                "DeleteReport"=> $ReportDelete,
-                "UpdateReport"=> $ReportUpdate,
-                "UpdateUserRole"=> $UserRoleUpdate,
-                "CreateUser"=> $UserCreate,
-                "ViewUser"=> $ViewUser,
-                "DeleteUser"=> $UserDelete,
-                "EditUser"=> $UserEdit,
-                "CreateRole"=> $RoleCreate,
-                "AuditReport"=> $ReportAudit,
-                "ViewGroup" => $GroupView,
-                "UnlockUser" => $UserUnlock,
-                "SendReport"=> $ReportSend,
-                "BVNBlacklisting"=> $BlacklistBvn,
-                "UploadBVN"=> $UploadBVN,
-                "SurveyRating"=> $AppRating,
+                "ViewUser"=> $viewUser,
+                "DeleteUser"=> $deleteUser,
+                "EditUser"=> $editUser,
+                "UnlockUser"=> $unlockUser,
+                "UpdateUserRole"=>$updateUserRole,
+                "CreateRole"=> $createRoles,
+                "ViewGroup"=> $viewRoles,
+                "CreateUser"=> $createAdmin,
+                "CreateSubAgent"=> $createSubAgent,
+                "CreateAggregator"=> $createAggregator,
+                "DeactivateUser"=> $deactivateUser,
+                "ReactivateUser" => $activateUser,
+                "AccountOpening" => $accountOpeningReport,
+                "CardIssuance"=> $cardIssuance,
+                "AccountOpeningReport"=> $accountOpeningReport,
+                "CardIssuanceReport"=> $cardIssuanceReport,
+                "AgentOnboardedReport"=> $agentOnboardedReport,
+                "AggregatorReport" => $aggregatorReport,
                 "LoginID"=> $loginID
         ]),
 
@@ -125,7 +132,7 @@ if (!isset($apiKey) || empty($apiKey)) {
     // Success response
     echo json_encode([
         'status' => 'success',
-        'message' => 'Group created successfully!',
+        'message' => 'Group role created successfully!',
         'redirectUrl' => $redirectUrl
     ]);
     exit;

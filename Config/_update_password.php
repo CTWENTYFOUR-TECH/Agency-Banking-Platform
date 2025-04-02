@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Redirect based on FirstTimeLogin
-    $redirectUrl =  '../Dashboard';
+    $redirectUrl =  './../Dashboard';
 
     echo json_encode(['status' => 'success', 'redirect' => $redirectUrl]);
 }

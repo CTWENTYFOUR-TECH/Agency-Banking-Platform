@@ -19,8 +19,8 @@ $css = getHiddenElementsCSS();
 // Access GroupName
 $permissions = getUserPermissions();
 
-  @$group_name = $permissions['GroupName'];
-  @$group_id = $permissions['GroupID'];
+  $group_name = $permissions['GroupName'];
+  $group_id = $permissions['GroupID'];
 
 
 // $createUser = $permissions['createadmin_user'];
@@ -98,23 +98,23 @@ $title = $title ?? "Agent Management System";
           <div class="collapse " id="applicationsExamples">
             <ul class="nav ms-4">
               <li class="nav-item createadmin_user">
-                <a class="nav-link " href="../CreateAdmin/">
+                <a class="nav-link " href="../CreateUsers/">
                   <span class="sidenav-mini-icon"> W </span>
-                  <span class="sidenav-normal">Create Admin</span>
+                  <span class="sidenav-normal">Create User</span>
                 </a>
               </li>
-              <li class="nav-item createaggregator_user">
+              <!-- <li class="nav-item createaggregator_user">
                 <a class="nav-link " href="../CreateAggregator/">
                   <span class="sidenav-mini-icon"> K </span>
                   <span class="sidenav-normal"> Create Aggregators </span>
                 </a>
-              </li>
-              <li class="nav-item createsubagent_user">
+              </li> -->
+              <!-- <li class="nav-item createsubagent_user">
                 <a class="nav-link " href="../CreateAgent">
                   <span class="sidenav-mini-icon"> W </span>
-                  <span class="sidenav-normal"> Create Sub Agent </span>
+                  <span class="sidenav-normal"> Create Agent </span>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item upgradeaggregator_user">
                 <a class="nav-link " href="../UpgradeAggregator">
                   <span class="sidenav-mini-icon"> D </span>
@@ -148,7 +148,7 @@ $title = $title ?? "Agent Management System";
                   <div class="collapse " id="AccountOpening">
                     <ul class="nav nav-sm flex-column">
                       <li class="nav-item ">
-                        <a class="nav-link " href="../OpenAccountBVN">
+                        <a class="nav-link " href="../AvailableBanks">
                           <span class="sidenav-mini-icon text-xs"> N </span>
                           <span class="sidenav-normal"> Savings Account (bvn) </span>
                         </a>
@@ -265,16 +265,112 @@ $title = $title ?? "Agent Management System";
     <a href="../Config/_logout.php" class="btn btn-dark btn-sm w-100 mb-3"><i class="ni ni-button-power text-warning text-sm opacity-10"></i> Log out</a>
     </div>
   </aside>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
+  <main class="main-content max-height-vh-100 h-100">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl  position-sticky top-1 z-index-sticky" id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm">
+              <a class="text-white" href="javascript:;">
+                <i class="ni ni-box-2"></i>
+              </a>
+            </li>
+            <!-- <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Account</a></li> -->
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?= $nav_header ?></li>
+          </ol>
+          <h6 class="font-weight-bolder text-white"><?= $nav_header ?></h6>
+        </nav>
+        <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none me-auto">
+          <a href="javascript:;" class="nav-link text-body p-0">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+            </div>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse me-md-0 me-sm-4 mt-sm-0 mt-2" id="navbar">
+          <ul class="navbar-nav justify-content-end ms-auto">
+            <li class="nav-item d-xl-none ps-3 pe-0 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-white"></i>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+
+
+
+
+  <!-- <main class="main-content position-relative border-radius-lg ">
+   
     <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
+   
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
-          <h3 class="font-weight-bolder mb-0 text-white"><?= $nav_header ?></h3>
+          <h3 class="font-weight-bolder mb-0 text-white">...</h3>
         </nav>
         
       </div>
     </nav>
+
+
+    <main class="main-content position-relative border-radius-lg ">
+   
+    <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm">
+              <a class="text-white" href="javascript:;">
+                <i class="ni ni-box-2"></i>
+              </a>
+            </li>
+            <li class="breadcrumb-item text-sm text-white"><a class="opacity-5 text-white" href="javascript:;"></a></li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page"></li>
+          </ol>
+          <h6 class="font-weight-bolder mb-0 text-white"></h6>
+        </nav>
+        <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
+          <a href="javascript:;" class="nav-link p-0">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+            </div>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+           
+          </div>
+          <ul class="navbar-nav  justify-content-end">
+            
+           
+             <li class="nav-item dropdown pe-2 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+             
+              <i class="fa fa-bell cursor-pointer"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                
+                
+               
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> -->
+    <!-- End Navbar -->
     <!-- End Navbar -->

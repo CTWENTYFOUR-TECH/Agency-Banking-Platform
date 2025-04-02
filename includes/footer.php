@@ -7,10 +7,8 @@ $footer='
               <div class="copyright text-center text-sm text-muted text-lg-start">
                 © <script>
                   document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="#" class="font-weight-bold" target="_blank">Lukeport Service Limited</a>
-                for a better web.
+                </script>
+                <a href="#" class="font-weight-bold" target="_blank">Lukeport Service Limited. Licensed Superagent by CBN</a>
               </div>
             </div>
             <div class="col-lg-6">

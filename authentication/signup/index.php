@@ -47,6 +47,9 @@
                       <input type="email" class="form-control" name="emailLoginId" id="emailLoginId" required placeholder="example@example.com" />
                     </div>
                     <div class="input-group mb-3 input-group-outline">
+                      <input type="email" class="form-control" name="phoneNumber" id="phoneNumber" required placeholder="Enter phone number" />
+                    </div>
+                    <div class="input-group mb-3 input-group-outline">
                       <input type="password" class="form-control" name="passwordLogin" id="passwordLogin" required placeholder="Enter strong password" />
                     </div>
                     <div class="input-group mb-3 input-group-outline">
@@ -95,6 +98,7 @@
                     middleName: $("#middleName").val(),
                     gender: $("#gender").val(),
                     emailLoginId: $("#emailLoginId").val(),
+                    phoneNumber: $("#phoneNumber").val(),
                     passwordLogin: $("#passwordLogin").val(),
                     confirmPassword: $("#confirmPassword").val()
                 };
