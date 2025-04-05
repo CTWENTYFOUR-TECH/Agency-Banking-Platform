@@ -27,29 +27,23 @@ if (!checkPermissions(PERMISSION_UPGRADE_AGGREGATOR)) {
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="p-4">
-                                <form class="userUnlock" autocomplete="off" method ="POST" id="userUnlock">
+                                <form class="upgradeUser" autocomplete="off" method ="POST" id="upgradeUserForm">
                                     <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <label for="loginEmail" class="form-label">Login Email</label>
-                                            <input type="text" class="form-control" id="loginEmail" placeholder="Login Email Address" required name="loginEmail">
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <label for="loginEmail" class="form-label">Agent Code</label>
+                                            <input type="text" class="form-control" id="agentCode" placeholder="Agent code for the agent" required name="agentCode">
                                         </div>
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
                                             <label for="loginEmailConfirmation" class="form-label">Email Confirmation</label>
                                             <input type="text" class="form-control" id="loginEmailConfirmation" required name="loginEmailConfirmation" value="<?php echo isset($loginEmailVerify) ? htmlspecialchars($loginEmailVerify) : ''; ?>" readonly />
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <label for="setNewPassword" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="setNewPassword" placeholder="New Password" required name="setNewPassword">
-                                        </div>
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required name="confirmPassword" />
-                                            <input type="hidden" class="form-control" id="loginID" name="loginID" value="<?= htmlspecialchars($userSessionData['emailAddress']); ?>">
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <label for="agentFullName" class="form-label">Agent Name</label>
+                                            <input type="text" class="form-control" id="agentFullName" required name="agentFullName" value="<?php echo isset($agentFullName) ? htmlspecialchars($agentFullName) : ''; ?>" readonly />
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary w-100 mt-4" id="submitButton">UNLOCK NOW</button>
+                                    <input type="hidden" class="form-control" id="loginID" name="loginID" value="<?= htmlspecialchars($userSessionData['emailAddress']); ?>">
+                                    <button type="submit" class="btn btn-primary w-100 mt-4" id="submitButton">CLICK TO UPGRADE</button>
                                 </form>
                             </div>
                         </div>
@@ -64,75 +58,92 @@ if (!checkPermissions(PERMISSION_UPGRADE_AGGREGATOR)) {
 ?> 
 <script>
     $(document).ready(function () {
-        let typingTimer;
-        let doneTypingInterval = 1500; // 1.5-second delay after typing stops
+    let typingTimer;
+    let doneTypingInterval = 1500; // 1.5-second delay after typing stops
 
-        $("#loginEmail").on("keyup", function () {
-            clearTimeout(typingTimer); // Cancel previous timer
-            let loginEmail = $.trim($("#loginEmail").val());
+    $("#agentCode").on("keyup", function () {
+        clearTimeout(typingTimer); // Cancel previous timer
+        let agentCode = $.trim($("#agentCode").val());
 
-            if (loginEmail === '') {
-                $("#loginEmailConfirmation").val('').prop("disabled", false); // Clear and re-enable
-                return;
-            }
-
-            typingTimer = setTimeout(function () {
-                callLockedEmailAPI(loginEmail);
-            }, doneTypingInterval);
-        });
-
-        function callLockedEmailAPI(loginEmail) {
-            let loginID = $.trim($("#loginID").val());
-
-            $("#loginEmailConfirmation").val("Checking...").prop("disabled", true); // Show loading state
-
-            $.ajax({
-                url: "../Config/_getLockedEmail.php", // API endpoint
-                type: "POST",
-                data: { loginEmail: loginEmail, loginID: loginID },
-                dataType: "json",
-                success: function (response) {
-                    if (response.status === "success" && response.lockedEmail) {
-                        $("#loginEmailConfirmation").val(response.lockedEmail);
-                    } else {
-                        $("#loginEmailConfirmation").val(''); // Clear if not found
-                        toastr.error(response.message || "Email not locked.", "Error");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX Error:", xhr.responseText); // Log error response
-                    toastr.error("Something went wrong. Please check the console.", "Error");
-                },
-                complete: function () {
-                    $("#loginEmailConfirmation").prop("disabled", false); // Re-enable field
-                }
-            });
+        if (agentCode === '') {
+            $("#loginEmailConfirmation").val('').prop("disabled", false);
+            $("#agentFullName").val('').prop("disabled", false);
+            return;
         }
 
-        $("#userUnlock").submit(function (event) {
+        typingTimer = setTimeout(function () {
+            callLockedEmailAPI(agentCode);
+        }, doneTypingInterval);
+    });
+
+    function callLockedEmailAPI(agentCode) {
+        let loginID = $.trim($("#loginID").val());
+
+        $("#loginEmailConfirmation").val("Checking...").prop("disabled", true);
+        $("#agentFullName").val("Checking...").prop("disabled", true); // Fixed typo here (was "disable")
+        
+        $.ajax({
+            url: "../Config/_get_agent_code.php",
+            type: "POST",
+            data: { agentCode: agentCode, loginID: loginID },
+            dataType: "json",
+            success: function (response) {
+                if (response.status === "success") {
+                    $("#loginEmailConfirmation").val(response.agentEmail || '');
+                    $("#agentFullName").val(response.agentName || '');
+                    
+                    if (!response.agentEmail || !response.agentName) {
+                        toastr.error("Agent information incomplete", "Error");
+                    }
+                } else {
+                    $("#loginEmailConfirmation").val('');
+                    $("#agentFullName").val('');
+                    toastr.error(response.message || "User Not Found.", "Error");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error, xhr.responseText);
+                $("#loginEmailConfirmation").val('').prop("disabled", false);
+                $("#agentFullName").val('').prop("disabled", false);
+                toastr.error("Failed to fetch agent details. Please try again.", "Error");
+            },
+            complete: function () {
+                $("#loginEmailConfirmation").prop("disabled", false);
+                $("#agentFullName").prop("disabled", false);
+            }
+        });
+    }
+
+        $("#upgradeUserForm").submit(function (event) {
             event.preventDefault(); // Prevent default form submission
 
             let submitButton = $("#submitButton");
             let originalText = submitButton.text(); // Store original text
 
-            submitButton.prop("disabled", true).text("Unlocking..."); // Disable button & show progress
+            //submitButton.prop("disabled", true).text("Unlocking..."); // Disable button & show progress
+            submitButton.prop("disabled", true).html(`
+                    <span class="button-content">
+                        <i class="fa fa-spinner fa-spin fa-fw"></i>
+                        <span></span>
+                    </span>
+                `);
 
             let formData = {
                 loginEmailConfirmation: $("#loginEmailConfirmation").val(),
-                setNewPassword: $("#setNewPassword").val(), // Ensure correct ID
-                confirmPassword: $("#confirmPassword").val(),
+                agentFullName: $("#agentFullName").val(), // Ensure correct ID
+                agentCode: $("#agentCode").val(),
                 loginID:  $("#loginID").val(),// Ensure correct ID
             };
 
             // Ensure all fields are filled before making the request
-            if (!formData.loginEmailConfirmation || !formData.setNewPassword || !formData.confirmPassword) {
+            if (!formData.loginEmailConfirmation || !formData.agentFullName || !formData.agentCode) {
                 toastr.error("Please fill all fields before submitting.", "Error");
                 submitButton.prop("disabled", false).text(originalText);
                 return;
             }
 
             $.ajax({
-                url: "../Config/_unlockLockedEmail.php", // PHP file to handle unlocking
+                url: "../Config/_upgrade_to_aggregator.php", // PHP file to handle unlocking
                 type: "POST",
                 data: formData,
                 dataType: "json",

@@ -116,7 +116,7 @@ $title = $title ?? "Agent Management System";
                 </a>
               </li> -->
               <li class="nav-item upgradeaggregator_user">
-                <a class="nav-link " href="../UpgradeAggregator">
+                <a class="nav-link " href="../UpgradeToAggregator">
                   <span class="sidenav-mini-icon"> D </span>
                   <span class="sidenav-normal"> Upgrade To Aggregator </span>
                 </a>
@@ -183,9 +183,15 @@ $title = $title ?? "Agent Management System";
             <ul class="nav ms-4">
              
               <li class="nav-item createrole_user">
-                <a class="nav-link " href="../roleManagement">
+                <a class="nav-link " href="../RoleManagement">
                   <span class="sidenav-mini-icon"> R </span>
                   <span class="sidenav-normal"> User Role </span>
+                </a>
+              </li>
+              <li class="nav-item updaterole_user">
+                <a class="nav-link " href="../UpdateUserRoles">
+                  <span class="sidenav-mini-icon"> R </span>
+                  <span class="sidenav-normal"> Update User Role </span>
                 </a>
               </li>
             </ul>
