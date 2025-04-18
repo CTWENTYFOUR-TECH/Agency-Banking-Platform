@@ -129,7 +129,7 @@ $(document).ready(function() {
     let html = `
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">${groupName} Permissions</h5>
+                <h5 class="mb-0" style="color: #fff">${groupName} Permissions</h5>
             </div>
             <div class="card-body">
                 <div class="row">

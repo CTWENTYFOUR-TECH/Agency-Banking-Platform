@@ -1,10 +1,22 @@
 {
-    "name": "emman/agency-banking-platform",
-    "description": "agency banking system",
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6",
+        "selective/basepath": "^2.2",
+        "guzzlehttp/guzzle": "^7.8",
+        "phpseclib/phpseclib": "^3.0",
+        "firebase/php-jwt": "^6.10",
+        "vlucas/phpdotenv": "^5.6",
+        "ramsey/uuid": "^4.7",
+        "spomky-labs/otphp": "^11.3",
+        "endroid/qr-code": "^5.1",
+        "phpmailer/phpmailer": "^6.9",
+        "phpoffice/phpspreadsheet": "^3.5",
+        "zircote/swagger-php": "^5.0"
+    },
     "autoload": {
         "psr-4": {
-            "Emman\\AgencyBankingPlatform\\": "src/"
+            "App\\": "src"
         }
-    },
-    "require": {}
+    }
 }

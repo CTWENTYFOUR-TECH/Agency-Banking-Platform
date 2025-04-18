@@ -99,17 +99,36 @@ $footer='
       </div>
     </div>
   </div>
-  <!-- Jquery js -->
-  <script src="../assets/js/jquery.min.js"></script>
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+
+  <!-- Select 2 -->
+  <script src="../assets/select2/js/select2.min.js"></script>
+
   <!-- Kanban scripts -->
   <script src="../assets/js/plugins/dragula/dragula.min.js"></script>
   <script src="../assets/js/plugins/jkanban/jkanban.js"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <!-- Datatable JS -->
+  <script src="../assets/datatables/jquery.dataTables.min.js"></script>
+  <script src="../assets/datatables/jquery.dataTables.bootstrap4.min.js"></script>
+  <script src="../assets/datatables/jquery.dataTables.bootstrap4.js"></script>
+
+  <!-- Button DataTable JS -->
+  <script src="../assets/datatables/pdfmake.min.js"></script>
+  <script src="../assets/datatables/vfs_fonts.js"></script>
+  <script src="../assets/datatables/button/js/buttons.print.min.js"></script>
+  <script src="../assets/datatables/button/js/jszip.min.js"></script>
+  <script src="../assets/datatables/button/js/dataTables.buttons.min.js"></script>
+  <script src="../assets/datatables/button/js/buttons.html5.min.js"></script>
+
+  <!-- Other JS -->
+  <script src="../assets/js/jsencrypt.min.js"></script>
+
+  <!-- END Datatable JS -->
   <script>
     var ctx1 = document.getElementById("chart-line").getContext("2d");
 

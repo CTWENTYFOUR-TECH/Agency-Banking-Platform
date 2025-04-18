@@ -54,6 +54,8 @@ $title = $title ?? "Agent Management System";
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!--Sweetalert -->
+  <link href="../assets/sweetalert/css/sweetalert2.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.5" rel="stylesheet" />
   <!-- Font awesome -->
@@ -61,9 +63,25 @@ $title = $title ?? "Agent Management System";
   <!-- Toastr CSS -->
    <link href="../assets/toastr/css/toastr.min.css" rel="stylesheet" />
 
+   <link href="../assets/select2/css/select2.min.css" rel="stylesheet" />
+   
    <!-- Datepicker CSS -->
    <link href="../assets/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
   <!-- Argon CSS -->
+  <!-- DataTable CSS -->
+  <link href="../assets/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+  <link href="../assets/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <link href="../assets/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+  <link href="../assets/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+
+  <!-- DataTable Button CSS -->
+   <link href="../assets/datatables/button/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+   <!-- Jquery js -->
+  <script src="../assets/js/jquery.min.js"></script>
+    <!-- sweetalert js -->
+  <script src="../assets/sweetalert/js/sweetalert2@11.js"></script>
+   
   <?php echo $css; ?>
 </head>
 
@@ -148,7 +166,7 @@ $title = $title ?? "Agent Management System";
                   <div class="collapse " id="AccountOpening">
                     <ul class="nav nav-sm flex-column">
                       <li class="nav-item ">
-                        <a class="nav-link " href="../AvailableBanks">
+                        <a class="nav-link " href="../AccountOpeningValidation">
                           <span class="sidenav-mini-icon text-xs"> N </span>
                           <span class="sidenav-normal"> Savings Account (bvn) </span>
                         </a>
@@ -207,17 +225,16 @@ $title = $title ?? "Agent Management System";
           <div class="collapse " id="Report">
             <ul class="nav ms-4">
              
-              <li class="nav-item aggregatorreport_user">
+              <!-- <li class="nav-item aggregatorreport_user">
                 <a class="nav-link " href="../AggregatorReport">
                   <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal"> Aggregator List </span>
+                  <span class="sidenav-normal"> Aggregator Report </span>
                 </a>
-              </li>
-            </li>
-              <li class="nav-item agentonboardedreport_user">
+              </li> -->
+              <li class="nav-item agentreport_user">
                 <a class="nav-link " href="../AgentReport">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal"> Agent List </span>
+                  <span class="sidenav-mini-icon"> R </span>
+                  <span class="sidenav-normal"> Agent Report </span>
                 </a>
               </li>
               <li class="nav-item accountopeningreport_user">

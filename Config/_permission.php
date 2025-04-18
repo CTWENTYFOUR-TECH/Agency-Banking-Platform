@@ -22,7 +22,7 @@ define('PERMISSION_ACCOUNT_OPENING', 'accountopening_user');
 define('PERMISSION_CARD_ISSUANCE', 'cardissuance_user');
 define('PERMISSION_CARD_ISSUANCE_REPORT', 'cardissuancereport_user');
 define('PERMISSION_ACCOUNTOPENING_REPORT', 'accountopeningreport_user');
-define('PERMISSION_AGENTONBOARDED_REPORT', 'agentonboardedreport_user'); //This is for all the reports
+define('PERMISSION_AGENTONBOARDED_REPORT', 'agentreport_user'); //This is for all the reports
 define('PERMISSION_AGGREGATOR_REPORT', 'aggregatorreport_user');
 define('PERMISSION_CREATE_AGGREGATOR', 'createaggregator_user');
 define('PERMISSION_CREATE_SUB_AGENT', 'createsubagent_user');
@@ -82,10 +82,10 @@ function getUserPermissions() {
             PERMISSION_CARD_ISSUANCE => $role['CardIssuance'] ?? 0,
             PERMISSION_CARD_ISSUANCE_REPORT => $role['CardIssuanceReport'] ?? 0,
             PERMISSION_ACCOUNTOPENING_REPORT => $role['AccountOpeningReport'] ?? 0,
-            PERMISSION_AGENTONBOARDED_REPORT => $role['AgentOnboardedReport	'] ?? 0,
+            PERMISSION_AGENTONBOARDED_REPORT => $role['AgentOnboardedReport'] ?? 0,
             PERMISSION_AGGREGATOR_REPORT => $role['AggregatorReport'] ?? 0,
             PERMISSION_CREATE_AGGREGATOR => $role['CreateAggregator'] ?? 0,
-            PERMISSION_UPGRADE_AGGREGATOR => $role['UpgradeAggregator'] ?? 0,
+            PERMISSION_UPGRADE_AGGREGATOR => $role['UpgradeToAggregator'] ?? 0,
             PERMISSION_DEACTIVATE_USER => $role['DeactivateUser'] ?? 0,
             PERMISSION_REACTIVATE_USER => $role['ReactivateUser'] ?? 0,
             PERMISSION_CREATE_SUB_AGENT => $role['CreateSubAgent'] ?? 0
@@ -133,6 +133,7 @@ function getUserSessionData() {
     return [
         'secretKey' => $_SESSION['SecretKey'] ?? '',
         'agentCode' => $user['AgentCode'] ?? '',
+        'aggregatorCode' => $user['aggregatorCode'] ?? '',
         'firstName' => $user['FirstName'] ?? '',
         'lastName' => $user['LastName'] ?? '',
         'middleName' => $user['MiddleName'] ?? '',
