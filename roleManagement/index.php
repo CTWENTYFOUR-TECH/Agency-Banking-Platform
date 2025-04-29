@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 $title = "Role Management | Agent Management System";
 $nav_header = "Roles Assignment";
 include('../includes/header.php');
@@ -16,6 +17,22 @@ if (!checkPermissions(PERMISSION_CREATE_ROLE)) {
         </script>";  
     }
 ?>
+=======
+  include('../includes/header.php');
+?>  
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          
+          <h3 class="font-weight-bolder mb-0 text-white">User Roles</h3>
+        </nav>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+>>>>>>> 6e26c22824c07efb27e7b83a11577a4fbc861a56
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-lg-12 mb-4 mb-lg-0">
@@ -148,6 +165,7 @@ if (!checkPermissions(PERMISSION_CREATE_ROLE)) {
 <?php
   include('../includes/footer.php');
   echo $footer;
+<<<<<<< HEAD
 ?> 
 <script>
 // $(document).ready(function () {
@@ -252,3 +270,6 @@ $(document).ready(function () {
     });
 });
 </script>
+=======
+?>
+>>>>>>> 6e26c22824c07efb27e7b83a11577a4fbc861a56
