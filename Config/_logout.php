@@ -8,6 +8,7 @@ header("Content-Type: application/json"); // Ensure JSON response
 // Validate session key
 
 $userEmail = $userSessionData['emailAddress']; 
+$apikey = $userSessionData['secretKey']; 
 
 if (!isset($userEmail) || empty($userEmail)) {
     echo json_encode(['status' => 'error', 'message' => 'User Email is required.']);
@@ -17,16 +18,25 @@ if (!isset($userEmail) || empty($userEmail)) {
 
     $curl = curl_init();
 
-    curl_setopt_array($curl, [
-        CURLOPT_URL => 'https://lukeportservice.cpay.ng/lukeportservice/api/logout/'.$userEmail,
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://lukeportservice.cpay.ng/lukeportservice/api/logout',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET'
-    ]);
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode(array(
+            'loginID' => $userEmail
+            // 'token' => $apikey
+        )),
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'Authorization: '.$apikey
+        ),
+    ));
 
     $resUserEmail = curl_exec($curl);
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE); // Get HTTP status code
@@ -70,5 +80,5 @@ if (!isset($userEmail) || empty($userEmail)) {
     //     'redirectUrl' => $redirectUrl
     // ]);
     // exit;
-    header('Location:http://127.0.0.1/agency-banking-platform/Logout');
+    header('Location:http://127.0.0.1/agency-banking-platform/Authentication/signin');
 ?>

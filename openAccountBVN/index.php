@@ -22,6 +22,8 @@
         </script>";  
         exit;
       }
+
+      require_once __DIR__ . '/../vendor/autoload.php';
 ?>
     <div class="container-fluid py-4">
         <div class="row">
@@ -35,7 +37,7 @@
                         <h2>OPEN A SAVINGS ACCOUNT</h2>
                         <p>Be rest assure that your information are securely safe with us. Your information will never be divulge to anyone without your consent.</p>
                     </div>
-                    <form>
+                    <form method ="POST" autocomplete="off" enctype="multipart/form-data">
                         <div class="row">
                           <div class="col-md-4">
                               <div class="form-group">
@@ -68,7 +70,7 @@
                         <div class="row">
                           <div class="col-md-4">
                             <div class="form-group">
-                                <label>First Name*:<span class="text-danger">*</span></label>
+                                <label>First Name:<span class="text-danger">*</span></label>
                               <input type="text" class="form-control" name="FirstName" id="FirstName" value="<?= $_SESSION['firstName'] ?>" readonly required/>
                             </div>
                           </div>
@@ -187,6 +189,14 @@
                                 </div>
                               </div>
                           </div>
+                          <div class="col-md-4" id="gtbank"> 
+                                <div class="form-group">
+                                    <label>Agent Account<span class="text-danger"> Enter your agent account *</span></label>
+                                  <input type="number" class="form-control" id="AgentAccount" name="AgentAccount"/>
+                                </div>
+                              </div>
+                              <input type="number" class="form-control" id="ReferenceNumber" name="ReferenceNumber" value="<?= $_SESSION['ReferenceNumber']; ?>"/>
+                          </div>
                           <div class="row">
                               <div class="col-md-4" id="fcmb_bank">
                                 <div class="form-group">
@@ -286,15 +296,16 @@
                             <h4>Disclaimer Clause</h4>
                             <p>The Financial Institutions shall not be liable for breaches/disclosures that may occur if compelled by law or regulation to disclose customer data to third parties. However, the Financial Institutions and SANEF shall exercise due care to ensure that the customers biometrics data is secure and protected.</p>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="YES" id="defaultCheck1" name = "defaultCheck1">
                                     I have read the NDPR DATA PROTECTION CONSENT and I accept to proceed
                                 </div>
                           </div>
-                        <button type="submit" class="btn btn-primary" id="submitAccount"> Submit </button>
+                        <input type="submit" class="btn btn-primary" id="submitAccount" name="submitAccount" value="Submit">
                       </form>
                   </div>
                 </div>
               </div>
+              <?php include('../Config/_create_account_bvn.php');  ?>
         </div>
 <?php
   include('../includes/footer.php');

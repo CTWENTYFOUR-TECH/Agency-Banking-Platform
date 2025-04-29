@@ -79,10 +79,10 @@
                     </div>
                   </div>
                   <div class="row g-3">
-                  <div class="col-md-4">
+                  <div class="col-md-4" id="pcCode">
                       <div class="form-group">
                         <label for="pcCode" class="form-label">PC Code <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="pcCode" placeholder="Enter your region PC Code" name="pcCode" required />
+                        <input type="number" class="form-control" id="pcCode" placeholder="Enter your region PC Code" name="pcCode"/>
                       </div>
                     </div>
                     <!-- Bank Dropdown -->
@@ -139,7 +139,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const selectedBankText = document.getElementById('selectedBankText');
   const selectedLogo = document.getElementById('selectedLogo');
   const bankInput = document.getElementById('bankInput');
+  const pcCode = document.getElementById('pcCode');
   
+  // Hide pcCode initially
+  pcCode.style.display = 'none';
+  pcCode.removeAttribute('required'); // Start with required removed
+
+  // Function to toggle pcCode visibility
+  const togglePcCode = () => {
+    const bankValue = bankInput.value; // or selectedBankText.textContent
+    
+    if (bankValue === '000013') {
+      pcCode.style.display = 'block';
+      pcCode.setAttribute('required', 'required'); // Proper way to set required
+    } else {
+      pcCode.style.display = 'none';
+      pcCode.removeAttribute('required'); // Proper way to remove required
+      pcCode.value = ''; // Clear value when hidden
+    }
+  };
+
   dropdownItems.forEach(item => {
     item.addEventListener('click', function(e) {
       e.preventDefault();
@@ -152,12 +171,16 @@ document.addEventListener('DOMContentLoaded', function() {
       selectedLogo.src = bankLogo;
       selectedLogo.style.display = 'inline-block';
       
-      // Update the hidden input value for form submission
+      // Update the hidden input value
       bankInput.value = bankValue;
+      
+      // Toggle pcCode visibility and requirement
+      togglePcCode();
       
       // Close the dropdown
       const dropdown = this.closest('.dropdown');
-      const dropdownInstance = bootstrap.Dropdown.getInstance(dropdown.querySelector('.dropdown-toggle'));
+      const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+      const dropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle) || new bootstrap.Dropdown(dropdownToggle);
       dropdownInstance.hide();
     });
   });

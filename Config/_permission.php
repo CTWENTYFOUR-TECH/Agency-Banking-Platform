@@ -31,8 +31,8 @@ define('PERMISSION_DEACTIVATE_USER', 'deactivate_user');
 define('PERMISSION_REACTIVATE_USER', 'reactivate_user');
 
 
-// Session timeout duration (15 minutes)
-const SESSION_TIMEOUT = 900;
+// Session timeout duration (30 minutes)
+const SESSION_TIMEOUT = 1800;
 
 /**
  * Check if the session is valid and update last activity time.

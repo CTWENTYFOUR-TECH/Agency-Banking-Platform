@@ -127,6 +127,7 @@ $footer='
 
   <!-- Other JS -->
   <script src="../assets/js/jsencrypt.min.js"></script>
+  <script src="../assets/js/nonrefresh.js"></script>
 
   <!-- END Datatable JS -->
   <script>
