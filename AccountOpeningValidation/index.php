@@ -17,6 +17,7 @@
       }
 
       include('../Config/_validate_bvn.php');
+
 ?>
  <style>
         /* Custom styling for logos */
@@ -85,6 +86,12 @@
                         <input type="number" class="form-control" id="pcCode" placeholder="Enter your region PC Code" name="pcCode"/>
                       </div>
                     </div>
+                    <div class="col-md-4" id="wemaConsent">
+                      <div class="form-group">
+                        <label for="emailAddress" class="form-label">Email Address <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="emailAddress" placeholder="Email Address" name="emailAddress"/>
+                      </div>
+                    </div>
                     <!-- Bank Dropdown -->
                     <div class="col-md-4">
                       <div class="form-group">
@@ -134,55 +141,60 @@
   echo $footer;
 ?>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const dropdownItems = document.querySelectorAll('.dropdown-item');
-  const selectedBankText = document.getElementById('selectedBankText');
-  const selectedLogo = document.getElementById('selectedLogo');
-  const bankInput = document.getElementById('bankInput');
-  const pcCode = document.getElementById('pcCode');
+$(document).ready(function() {
+  // Cache DOM elements
+  const $dropdownItems = $('.dropdown-item');
+  const $selectedBankText = $('#selectedBankText');
+  const $selectedLogo = $('#selectedLogo');
+  const $bankInput = $('#bankInput');
+  const $pcCode = $('#pcCode');
+  const $wemaConsent = $('#wemaConsent');
   
   // Hide pcCode initially
-  pcCode.style.display = 'none';
-  pcCode.removeAttribute('required'); // Start with required removed
+  $pcCode.hide().removeAttr('required');
+  $wemaConsent.hide().removeAttr('required');
 
   // Function to toggle pcCode visibility
   const togglePcCode = () => {
-    const bankValue = bankInput.value; // or selectedBankText.textContent
+    const bankValue = $bankInput.val();
     
     if (bankValue === '000013') {
-      pcCode.style.display = 'block';
-      pcCode.setAttribute('required', 'required'); // Proper way to set required
+      $pcCode.show();
+      $pcCode.prop('required', true);
+    }else if(bankValue === '000017'){
+      $wemaConsent.show();
+      $wemaConsent.prop('required', true);
     } else {
-      pcCode.style.display = 'none';
-      pcCode.removeAttribute('required'); // Proper way to remove required
-      pcCode.value = ''; // Clear value when hidden
+      $pcCode.hide();
+      $wemaConsent.hide();
+      $pcCode.prop('required', false);
+      $wemaConsent.prop('required', false);
     }
   };
 
-  dropdownItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-      e.preventDefault();
-      const bankName = this.textContent.trim();
-      const bankValue = this.getAttribute('data-value');
-      const bankLogo = this.getAttribute('data-logo');
-      
-      // Update the display
-      selectedBankText.textContent = bankName;
-      selectedLogo.src = bankLogo;
-      selectedLogo.style.display = 'inline-block';
-      
-      // Update the hidden input value
-      bankInput.value = bankValue;
-      
-      // Toggle pcCode visibility and requirement
-      togglePcCode();
-      
-      // Close the dropdown
-      const dropdown = this.closest('.dropdown');
-      const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
-      const dropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle) || new bootstrap.Dropdown(dropdownToggle);
-      dropdownInstance.hide();
-    });
+  // Handle dropdown item clicks
+  $dropdownItems.on('click', function(e) {
+    e.preventDefault();
+    const $this = $(this);
+    const bankName = $this.text().trim();
+    const bankValue = $this.data('value');
+    const bankLogo = $this.data('logo');
+    
+    // Update the display
+    $selectedBankText.text(bankName);
+    $selectedLogo.attr('src', bankLogo).show();
+    
+    // Update the hidden input value
+    $bankInput.val(bankValue);
+    
+    // Toggle pcCode visibility and requirement
+    togglePcCode();
+    
+    // Close the dropdown
+    const $dropdown = $this.closest('.dropdown');
+    const $dropdownToggle = $dropdown.find('.dropdown-toggle');
+    const dropdownInstance = bootstrap.Dropdown.getInstance($dropdownToggle[0]) || new bootstrap.Dropdown($dropdownToggle[0]);
+    dropdownInstance.hide();
   });
 });
 </script>

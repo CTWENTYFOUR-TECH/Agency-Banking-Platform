@@ -13,19 +13,19 @@
 
 										switch ($uploadSignType) {
 											case IMAGETYPE_JPEG:
-												$resourceType = imagecreatefromjpeg($fileSignName);
+												$resourceType = @imagecreatefromjpeg($fileSignName);
 												$imageLayer= resizeImage($resourceType, $sourceImageWidth,$sourceImageHeight);
 												imagejpeg($imageLayer,$uploadPath."signature_".$resizeFileSignName.'.'.$fileSignExt);
 												break;
 
 											case IMAGETYPE_GIF:
-												$resourceType = imagecreatefromgif($fileSignName);
+												$resourceType = @imagecreatefromgif($fileSignName);
 												$imageLayer= resizeImage($resourceType, $sourceImageWidth,$sourceImageHeight);
 												imagegif($imageLayer,$uploadPath."signature_".$resizeFileSignName.'.'.$fileSignExt);
 												break;
 
 											case IMAGETYPE_PNG:
-												$resourceType = imagecreatefrompng($fileSignName);
+												$resourceType = @imagecreatefrompng($fileSignName);
 												$imageLayer= resizeImage($resourceType, $sourceImageWidth,$sourceImageHeight);
 												imagepng($imageLayer,$uploadPath."signature_".$resizeFileSignName.'.'.$fileSignExt);
 												break;

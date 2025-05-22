@@ -92,9 +92,8 @@
     return $body; // Return raw response for upstream processing
 }
 // User Consent for Account opening
- function userConsent($AgentCode, $Requestid, $Phoneno, $Channel, $PCCode, $UserId, $ReferenceNumber) {
-     
-       
+function userConsent($AgentCode, $Requestid, $Phoneno, $Channel, $PCCode, $UserId, $ReferenceNumber) {
+    
             $rawUserConsent = array(
                         "AgentId"=> $AgentCode,
                         "ReferenceNumber"=> $ReferenceNumber,
@@ -106,8 +105,6 @@
                         "AuthValue"=> "1234",
                         "RequestId"=> $Requestid
                     );
-           
-     
     // Initialize cURL session
     $curl = curl_init();          
 
@@ -132,6 +129,44 @@
         
     // Return the response
      return $responseUserConsent;
+}
+
+
+// Wema opening account for sending OTP
+function wemaConsent($wemaurl, $wema_ocp_apim, $wema_api_key, $Phoneno, $EmailAddress, $BVNo) {
+
+        $dataWema =  [
+            // Harcoded fields
+            "phoneNumber"=> $Phoneno,
+            "email" => $EmailAddress,
+            "bvn" => $BVNo
+        ];
+
+        $curlWema = curl_init();
+        curl_setopt_array($curlWema, [
+        CURLOPT_URL => $wemaurl.'/CustomerAccount/PostPartnershipAccountCreationWithBvn',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,  // Set timeout to prevent long waits
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($dataWema),
+
+        CURLOPT_HTTPHEADER => [
+            CURLOPT_HTTPHEADER => array(
+                'Ocp-Apim-Subscription-Key: '.$wema_ocp_apim,
+                'x-api-key: '.$wema_api_key,
+                'Content-Type: application/json'
+            )
+        ],
+        ]);
+
+        $responseWemaConsent = curl_exec($curlWema);
+    
+        return $responseWemaConsent;
+
 }
 
 

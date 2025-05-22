@@ -15,7 +15,7 @@
 
 										switch ($uploadImageType) {
 											case IMAGETYPE_JPEG:
-												$resourceType = imagecreatefromjpeg($fileName);
+												$resourceType = @imagecreatefromjpeg($fileName);
 												$imageLayer= resizeImage($resourceType, $sourceImageWidth,$sourceImageHeight);
 												imagejpeg($imageLayer,$uploadPath."thump_".$resizeFileName.'.'.$fileExt);
 												//echo base64_encode($imagesave);
@@ -23,14 +23,14 @@
 												break;
 
 											case IMAGETYPE_GIF:
-												$resourceType = imagecreatefromgif($fileName);
+												$resourceType = @imagecreatefromgif($fileName);
 												$imageLayer= resizeImage($resourceType, $sourceImageWidth,$sourceImageHeight);
 												imagegif($imageLayer,$uploadPath."thump_".$resizeFileName.'.'.$fileExt);
 												//echo base64_encode($imagesave2);
 												break;
 
 												case IMAGETYPE_PNG:
-												$resourceType = imagecreatefrompng($fileName);
+												$resourceType = @imagecreatefrompng($fileName);
 												$imageLayer= resizeImage($resourceType, $sourceImageWidth,$sourceImageHeight);
 												imagepng($imageLayer,$uploadPath."thump_".$resizeFileName.'.'.$fileExt);
 												//echo base64_encode($imagesave3);
